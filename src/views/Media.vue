@@ -26,20 +26,12 @@
                         <p>
                             简介
                             <el-button size="mini" round>编辑记录</el-button>
-                            <el-button size="mini" type="primary" @click="edit_introduction()" round>提交改进</el-button>
+                            <el-button size="mini" type="primary" @click="edit_introduction()" round>{{ introduction_edit_disable? '提交改进' : '保存' }}</el-button>
                         </p>
-                        <textarea name="" id="" cols="30" rows="10" :disabled="introduction_edit_disable" ref="introduction_editor">
-                            您可以帮我们填写影片信息哦，提交后我们会人工审核，合适的就会采纳，快来填写吧！
-                        </textarea>
+                        <textarea name="" id="" cols="30" rows="10" :disabled="introduction_edit_disable" v-model="introduction" ref="introduction_editor"></textarea>
                     </div>
                     <div class="tags">
-                        <el-tag
-                                size="mini"
-                                type="info"
-                                :key="tag"
-                                v-for="tag in tags"
-                                :disable-transitions="false"
-                                @close="handleClose(tag)">
+                        <el-tag size="mini" type="info" v-for="tag in tags" :key="tag" @close="handleClose(tag)">
                             {{tag}}
                         </el-tag>
                         <el-input
@@ -59,14 +51,36 @@
         </el-row>
         <el-row class="media">
             <el-col :xs="24" :sm="{span:22, offset:1}" :md="{span:18, offset:3}">
-                <el-col :xs="24" :sm="23" :md="17">
+                <el-col :xs="24" :sm="23" :md="18">
                     <div class="fake">
                         假装这是一个选择器
                     </div>
                 </el-col>
 
-                <el-col :xs="24" :sm="2" :md="4">
+                <el-col :xs="24" :sm="2" :md="6" class="staff-info">
+                    <div class="roles">
+                        <h3>角色声优
+                            <el-button size="mini" round>编辑记录</el-button>
+                            <el-button size="mini" type="primary" @click="edit_introduction()" round>{{ introduction_edit_disable? '提交改进' : '保存' }}</el-button>
+                        </h3>
+                        <table>
+                            <tr><td>土间埋</td><td>花泽香菜</td></tr>
+                            <tr><td>土间大平</td><td>花泽香菜</td></tr>
+                            <tr><td>别问，问就是</td><td>花泽香菜</td></tr>
+                        </table>
+                    </div>
 
+                    <div class="staff">
+                        <h3>STAFF
+                            <el-button size="mini" round>编辑记录</el-button>
+                            <el-button size="mini" type="primary" @click="edit_introduction()" round>{{ introduction_edit_disable? '提交改进' : '保存' }}</el-button>
+                        </h3>
+                        <table>
+                            <tr><td>制作公司</td><td>动画工坊</td></tr>
+                            <tr><td>导演</td><td>新海诚</td></tr>
+                            <tr><td>脚本</td><td>假装是个名字</td></tr>
+                        </table>
+                    </div>
                 </el-col>
             </el-col>
         </el-row>
@@ -85,6 +99,7 @@
             return {
                 value: 3.7,
                 introduction_edit_disable: true,
+                introduction: '您可以帮我们填写影片信息哦，提交后我们会人工审核，合适的就会采纳，快来填写吧！',
                 tagInputVisible: false,
                 inputValue: '',
                 tags:[
@@ -100,7 +115,9 @@
                 console.log(this.introduction_edit_disable)
                 if (this.introduction_edit_disable){
                     this.introduction_edit_disable = false
-                    this.$refs.introduction_editor.focus()
+                    this.$nextTick(() => {
+                        this.$refs.introduction_editor.focus()
+                    })
                 }else {
                     this.introduction_edit_disable = true
                 }
@@ -186,14 +203,6 @@
                     font-weight: 400;
                     color: #222222;
                 }
-                .el-button--mini:first-child{
-                    margin-left: 15px;
-                }
-                .el-button--mini{
-                    padding: 4px 11px;
-                    font-size: 12px;
-                    font-weight: 400;
-                }
                 textarea{
                     display: block;
                     margin-top: 5px;
@@ -225,10 +234,50 @@
     }
     .media{
         margin-top: 20px;
+
+
+        .staff-info{
+            background: #F7F7F7;
+            padding-left: 10px;
+
+            div{
+                background: white;
+                padding: 10px 20px 15px 20px;
+
+                h3{
+                    padding-top: 10px;
+                    line-height: 16px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #212121;
+                }
+
+                table{
+                    margin-top: 10px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #212121;
+
+                    tr{
+                        margin-top: 5px;
+
+                        td{
+                            width: 45%;
+                        }
+                    }
+                }
+            }
+            .staff{
+                margin-top: 20px;
+            }
+        }
     }
-    .fake{
-        width: 100%;
-        height: 500px;
-        background: black;
+    .el-button--mini{
+        padding: 4px 11px !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+    }
+    .el-button--mini:first-child{
+        margin-left: 15px;
     }
 </style>
