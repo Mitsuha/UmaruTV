@@ -1,0 +1,243 @@
+`<template>
+    <div>
+        <Nav></Nav>
+        <div class="body">
+            <Carouse></Carouse>
+            <div class="recommend">
+                <div class="title">
+                    <span class="icon">
+                        <i class="el-icon-video-play"></i>
+                        热推番剧
+                    </span>
+                    <span class="clock">
+                            <i class="el-icon-alarm-clock"></i>
+                        <!--                            <i class="el-icon-timer"></i>-->
+                    </span>
+                    <ul class="category">
+                        <li>后宫</li>
+                        <li>泡面</li>
+                        <li>治愈</li>
+                        <li>搞笑</li>
+                    </ul>
+                </div>
+                <el-row>
+                    <el-col :span="19">
+                        <el-carousel class="carousel" height="400" :autoplay="false" indicator-position="none" arrow="never">
+                            <el-carousel-item>
+                                <el-row class="list">
+                                    <el-col :span="8">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                    <el-col :span="5">
+                                        <div class="img"></div>
+                                        <div class="info">
+                                            <h4>这是一个动画名字</h4>
+                                            <p>他非常好看，我建议你们每个人都去看一遍</p>
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </el-col>
+
+                    <el-col :span="5" class="hot">
+                        <p class="title">
+                            一周排行榜
+                        </p>
+                        <ul class="list">
+                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                        </ul>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import Nav from "@/components/Nav";
+    import Carouse from "@/components/Carouse";
+
+    export default {
+        name: "Index",
+        components: {
+            Nav,
+            Carouse,
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .body{
+        padding: 20px 200px;
+
+        .recommend{
+            margin-top: 20px;
+
+            .title{
+                margin-bottom: 10px;
+                .icon{
+                    background: black;
+                    color: white;
+                    padding: 10px 15px;
+                    border-radius: 40px;
+                }
+
+                .clock{
+                    background: black;
+                    display: inline-block;
+                    color: white;
+                    margin-left: 30px;
+                    padding: 7px;
+                    border-radius: 50%;
+
+                    i{
+                        font-size: 23px;
+                    }
+                }
+                .category{
+                    list-style: none;
+                    display: inline-flex;
+                    padding-left: 10px;
+
+                    li{
+                        float: left;
+                        padding: 10px 15px;
+                    }
+                }
+            }
+
+            .list{
+                height: 300px;
+
+                .el-col{
+                    height: 150px;
+                    border-radius: 6px;
+                    /*padding: 5px 5px 0 5px;*/
+                    margin: 0 5px 5px 0;
+                    overflow: hidden;
+                    color: white;
+
+                    .img{
+                        background-image: url("../assets/carouse/4.jpg");
+                        background-size:cover;
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .info{
+                        transition:0.5s;
+                        padding-left: 10px;
+                        padding-top: 11%;
+                        position: relative;
+                        height: 55%;
+                        background-image: linear-gradient(#00000000, #000000);
+                        top: 0;
+                    }
+
+                }
+                .el-col:first-child{
+                    height: 100%;
+                    width: 35%;
+                    .info{
+                        padding-top: 34%;
+                    }
+                }
+                .el-col:hover{
+                    .info{
+                        top: -70%;
+                    }
+                }
+            }
+
+            .hot{
+                padding: 0 10px;
+
+                .title{
+                    text-align: center;
+                    background: black;
+                    color: white;
+                    line-height: 36px;
+                    border-radius: 27px;
+                }
+
+                .list{
+                    list-style: none;
+                    padding: 0;
+
+                    li{
+                        margin-top: 8px;
+                        line-height: 36px;
+                        background: #EEEEEE;
+                        opacity: 0.7;
+                        border-radius: 10px;
+                        padding-left: 30px;
+                        padding-right: 10px;
+
+                        i{
+                            float: right;
+                            line-height: 36px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>`
