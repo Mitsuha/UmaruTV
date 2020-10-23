@@ -1,4 +1,4 @@
-`<template>
+<template>
     <div>
         <Nav></Nav>
         <div class="body">
@@ -113,7 +113,7 @@
                     <i class="el-icon-video-play"></i>
                         热播番剧
                 </span>
-                <Media class="list"></Media>
+                <Medias class="list"></Medias>
             </div>
         </div>
     </div>
@@ -122,14 +122,26 @@
 <script>
     import Nav from "@/components/Nav";
     import Carouse from "@/components/Carouse";
-    import Media from "@/components/Media";
+    import Medias from "@/components/Media";
+    import { medias as MediaRequest } from "@/api";
 
     export default {
         name: "Index",
         components: {
             Nav,
             Carouse,
-            Media,
+            Medias,
+        },
+        created(){
+            this.loadMedia()
+        },
+        methods: {
+            loadMedia (){
+
+                MediaRequest({
+                    a:'a'
+                })
+            }
         }
     }
 </script>
@@ -257,4 +269,4 @@
             }
         }
     }
-</style>`
+</style>
