@@ -19,7 +19,7 @@
         </div>
         <div class="nav-search">
             <div class="search" v-bind:class="{ active:isActive }">
-                <input type="text" class="search-input">
+                <input type="text" class="search-input" ref="searchInput">
                 <button class="search-btn" @click="search()"><i class="el-icon-search"></i></button>
             </div>
         </div>
@@ -50,7 +50,11 @@
         },
         methods: {
             search() {
+                if (! this.isActive){
+                    this.$refs.searchInput.focus()
+                }
                 this.isActive = ! this.isActive;
+
             },
         }
     }

@@ -108,6 +108,13 @@
                     </el-col>
                 </el-row>
             </div>
+            <div class="media">
+                <span class="icon">
+                    <i class="el-icon-video-play"></i>
+                        热播番剧
+                </span>
+                <Media class="list"></Media>
+            </div>
         </div>
     </div>
 </template>
@@ -115,12 +122,14 @@
 <script>
     import Nav from "@/components/Nav";
     import Carouse from "@/components/Carouse";
+    import Media from "@/components/Media";
 
     export default {
         name: "Index",
         components: {
             Nav,
             Carouse,
+            Media,
         }
     }
 </script>
@@ -129,17 +138,18 @@
     .body{
         padding: 20px 200px;
 
+        .icon{
+            background: black;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 40px;
+        }
+
         .recommend{
             margin-top: 20px;
 
             .title{
                 margin-bottom: 10px;
-                .icon{
-                    background: black;
-                    color: white;
-                    padding: 10px 15px;
-                    border-radius: 40px;
-                }
 
                 .clock{
                     background: black;
@@ -208,7 +218,8 @@
             }
 
             .hot{
-                padding: 0 10px;
+                /*padding: 0 10px;*/
+                padding-left: 10px;
 
                 .title{
                     text-align: center;
@@ -237,6 +248,12 @@
                         }
                     }
                 }
+            }
+        }
+
+        .media{
+            .list{
+                margin-top: 10px;
             }
         }
     }
