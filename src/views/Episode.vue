@@ -5,8 +5,8 @@
             <el-col :span="17" class="left">
                 <div id="player"></div>
                 <div class="description">
-                    <h3>干物妹！小埋R</h3>
-                    <p>简介：小埋，复活！在房间无限展开的宇宙，再临……！在外人人称羡的才色兼备“美妹”，一回到家，就变身成不为人知的一心犯懒“干物妹”……！？极尽无所事事之能事的干物妹小埋，一手可乐一手薯片，沉浸于漫画、游戏、动画、网络……，将一同生活的哥哥太平放置在旁，忠于欲望向前突进！和同班同学海老名、切绘、希尔芬的关系也逐渐加深，小埋的日常变得越来越热闹！！！小埋的最强、最棒的日常，再次开始！</p>
+                    <h3>{{ data.name }}</h3>
+                    <p>简介：{{ data.introduction}}</p>
                 </div>
                 <div class="season-pricker">
                     <div class="season">
@@ -19,16 +19,16 @@
             </el-col>
             <el-col :span="7" class="right">
                 <h3>
-                    干物妹！小埋R <span>12 集全</span>
+                    {{ data.name }} <span>{{ data.episodes }} 集全</span>
                 </h3>
                 <div class="episode-picker">
                     <button
                             v-for="(episode, index) in episode_picker" :key="index"
                             @click="activeEpisode(episode)"
-                            :class="{ active:episode.active }"
+                            :class="{ active:episode.id === eid }"
                             plain
                     >
-                        {{ episode.id }}
+                        {{ episode.name }}
                     </button>
                 </div>
             </el-col>
@@ -40,6 +40,7 @@
     import Nav from "../components/Nav";
     import DPlayer from "dplayer";
     import Hls from 'hls.js';
+    import { Anime } from "@/api";
 
     window.Hls = Hls;
 
@@ -50,62 +51,99 @@
         },
         data: function(){
             return{
+                aid: null,
+                eid: null,
+                data: {},
+                active_episode: {},
                 episode_picker:[
-                    {
-                        id:1,
-                        name: '第一集',
-                        active: false
-                    },{
-                        id:2,
-                        name: '第二集',
-                        active: false
-                    },{
-                        id:3,
-                        name: '第三集',
-                        active: false
-                    },{
-                        id:4,
-                        name: '第四集',
-                        active: false
-                    },{
-                        id:5,
-                        name: '第五集',
-                        active: false
-                    },{
-                        id:6,
-                        name: '第六集',
-                        active: false
-                    },{
-                        id:7,
-                        name: '第七集',
-                        active: false
-                    },{
-                        id:8,
-                        name: '第八集',
-                        active: false
-                    },
-                ]
+                    // {name:"1",active:false},
+                    // {name:"2",active:false},
+                    // {name:"3",active:false},
+                    // {name:"4",active:false},
+                    // {name:"5",active:true},
+                ],
             }
         },
-        mounted() {
-            new DPlayer({
-                container: document.getElementById('player'),
-                video: {
-                    url: 'http://diaoshi.dehua-kuyun.com/20200929/17809_f53f0941/index.m3u8',
-                    type: 'hls'
-                },
-                danmaku: {
-                    // ...
-                    addition: ['https://api.prprpr.me/dplayer/v3/bilibili?aid=[aid]'],
-                },
-            });
+        // mounted() {
+        //     this.createPlayer()
+        // },
+        created(){
+            this.aid = Number(this.$route.params.aid)
+
+            if (this.$route.params.eid !== undefined){
+                this.eid = Number(this.$route.params.eid)
+            }
+
+            this.loadData()
         },
         methods: {
-            activeEpisode(episode) {
-                for(let ep in this.episode_picker){
-                    this.episode_picker[ep].active = false
+            loadData(){
+                Anime({id:this.aid, with:['episode.resource', 'tags']}).then((response) => {
+                    this.data = response.data
+                    this.episode_picker = response.data.episode
+
+                    if (this.eid === null){
+                        this.$router.push({
+                                name:'episode',
+                                params: {aid: this.aid, eid: response.data.episode[0].id}
+                            }
+                        )
+                    }
+
+                    for (let key in this.episode_picker){
+                        // eslint-disable-next-line no-prototype-builtins
+                        if (!this.episode_picker.hasOwnProperty(key)){
+                            continue
+                        }
+                        if (this.episode_picker[key].id === this.eid){
+                            this.active_episode = this.episode_picker[key]
+                            break
+                        }
+                    }
+
+                    this.createPlayer()
+                })
+            },
+            createPlayer(){
+                let quality = []
+
+                for (let key in this.active_episode.resource){
+                    // eslint-disable-next-line no-prototype-builtins
+                    if (!this.active_episode.resource.hasOwnProperty(key)){
+                        continue
+                    }
+                    quality.push({
+                        name: this.active_episode.resource[key].resolution,
+                        url: this.active_episode.resource[key].resource,
+                        // type: this.active_episode.resource[key].type,
+                        type: 'hls',
+                    })
                 }
-                episode.active = true
+                window.player = new DPlayer({
+                    container: document.getElementById('player'),
+                    video: {
+                        quality: quality,
+                        defaultQuality: 0,
+                        pic: 'demo.png',
+                        thumbnails: 'thumbnails.jpg',
+                    },
+                    // danmaku: {
+                    //     addition: ['https://api.prprpr.me/dplayer/v3/bilibili?aid=[aid]'],
+                    // },
+                });
+            },
+            activeEpisode(episode) {
+                this.$router.push({
+                        name:'episode',
+                        params: {
+                            aid: this.aid,
+                            eid: episode.id
+                        }
+                    }
+                )
+                this.active_episode = episode
+                this.eid = episode.id
+                this.createPlayer()
             },
         }
     }

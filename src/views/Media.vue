@@ -4,16 +4,16 @@
         <el-row class="detail">
             <el-col :xs="24" :sm="{span:22, offset:1}" :md="{span:18, offset:3}">
                 <div class="cover">
-                    <img src="../assets/cover.webp" alt="">
+                    <img :src="data.cover" :alt="data.name">
                 </div>
                 <div class="info">
-                    <h2>寻梦环游记</h2>
+                    <h2>{{ data.name}}</h2>
                     <table class="statistics">
                         <tr>
-                            <td>总播放</td><td>100w</td>
+                            <td>总播放</td><td>{{ data.watch}}</td>
                         </tr>
                         <tr>
-                            <td>总弹幕</td><td>350w</td>
+                            <td>总弹幕</td><td>{{ data.danmaku}}</td>
                         </tr>
                         <tr>
                             <td>评分</td>
@@ -31,8 +31,8 @@
                         <textarea name="" id="" cols="30" rows="10" :disabled="introduction_edit_disable" v-model="introduction" ref="introduction_editor"></textarea>
                     </div>
                     <div class="tags">
-                        <el-tag size="mini" type="info" v-for="tag in tags" :key="tag" @close="handleClose(tag)">
-                            {{tag}}
+                        <el-tag size="mini" type="info" v-for="(item, key) in tags" :key="key" @close="handleClose(key)">
+                            {{item.name}}
                         </el-tag>
                         <el-input
                                 class="input-new-tag"
@@ -51,10 +51,11 @@
         </el-row>
         <el-row class="media">
             <el-col :xs="24" :sm="{span:22, offset:1}" :md="{span:18, offset:3}">
-                <el-col :xs="24" :sm="23" :md="18">
-                    <div class="fake">
-                        假装这是一个选择器
-                    </div>
+                <el-col :xs="24" :sm="23" :md="18" class="season">
+<!--                    <div class="fake">-->
+<!--                        假装这是一个选择器-->
+<!--                    </div>-->
+                    <SeasonPricker></SeasonPricker>
                 </el-col>
 
                 <el-col :xs="24" :sm="2" :md="6" class="staff-info">
@@ -89,28 +90,39 @@
 
 <script>
     import Nav from "@/components/Nav";
+    import SeasonPricker from "@/components/SeasonPricker";
+    import { Anime } from "@/api";
 
     export default {
         name: "media",
         components: {
             Nav,
+            SeasonPricker,
         },
         data() {
             return {
+                data: {},
                 value: 3.7,
                 introduction_edit_disable: true,
                 introduction: '您可以帮我们填写影片信息哦，提交后我们会人工审核，合适的就会采纳，快来填写吧！',
                 tagInputVisible: false,
                 inputValue: '',
-                tags:[
-                    '治愈',
-                    '百合',
-                    '纯爱',
-                    'NTR',
-                ]
+                tags:[]
             }
         },
+        created() {
+            this.loadData()
+        },
+
         methods:{
+            loadData(){
+                let id = this.$route.params.id
+                Anime({id: id, withEpisode: true}).then((response)=>{
+                    this.data = response.data
+                    this.tags = response.data.tags
+                    this.introduction = response.data.introduction
+                })
+            },
             edit_introduction () {
                 console.log(this.introduction_edit_disable)
                 if (this.introduction_edit_disable){
@@ -234,6 +246,11 @@
     }
     .media{
         margin-top: 20px;
+
+        .season{
+            background: white;
+            z-index: -2;
+        }
 
 
         .staff-info{

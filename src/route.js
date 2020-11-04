@@ -13,11 +13,11 @@ export default new Router({
             name: 'index',
             component: Index
         }, {
-            path: '/media',
+            path: '/anime/:id',
             name: 'media',
             component: Media
         }, {
-            path: '/episode',
+            path: '/anime/:aid/episode/:eid?',
             name: 'episode',
             component: Episode
         },

@@ -1,53 +1,43 @@
 <template>
     <el-row :gutter="30">
-        <el-col :span="4" v-for="(item, key) in video" :key="key">
-            <div class="cover">
-                <img :src="item.img" alt="">
-            </div>
-            <p>{{ item.name}} <span><i class="el-icon-success"></i> {{ item.watch }}</span></p>
+        <el-col class="test" :span="4" v-for="(item, key) in data.data" :key="key">
+            <router-link :to="{name:'media', params:{id: item.id}}">
+                <div class="cover">
+                    <img :src="item.cover" alt="">
+                </div>
+                <p>{{ item.name}} <span><i class="el-icon-success"></i> {{ diffForHumans(item.watch) }}</span></p>
+            </router-link>
         </el-col>
     </el-row>
 </template>
 
 <script>
+    import { diffForHumans } from "@/helper";
+
     export default {
         name: "Media",
-        data: function () {
-            return {
-                video:[
-                    {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    }, {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    }, {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    }, {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    },
-                    {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    },
-                    {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    },
-                    {
-                        img: '/carouse/cover.webp',
-                        name: '你的名字',
-                        watch: '24594',
-                    },
-                ]
+        data: function(){
+            return{
+                resource:[]
+            }
+        },
+        props: {
+            data:{
+                type: Object
+            }
+        },
+        created(){
+            // this.handleData()
+        },
+        methods: {
+            handleData(){
+
+            },
+            jumpToMedia(id){
+                console.log(id)
+            },
+            diffForHumans(number){
+                return diffForHumans(number)
             }
         }
     }

@@ -98,12 +98,11 @@
                             一周排行榜
                         </p>
                         <ul class="list">
-                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
-                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
-                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
-                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
-                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
-                            <li><strong>1.</strong> 夏目友人帐 <i class="el-icon-arrow-right"></i></li>
+                            <li v-for="(item, key) in recentlyUpdate" :key="key">
+                                <router-link :to="{name:'media', params:{id:item.id}}">
+                                    <strong>{{ key + 1 }}.</strong> {{ item.name }} <i class="el-icon-arrow-right"></i>
+                                </router-link>
+                            </li>
                         </ul>
                     </el-col>
                 </el-row>
@@ -113,7 +112,7 @@
                     <i class="el-icon-video-play"></i>
                         热播番剧
                 </span>
-                <Medias class="list"></Medias>
+                <Medias class="list" :data="mediaData"></Medias>
             </div>
         </div>
     </div>
@@ -123,7 +122,7 @@
     import Nav from "@/components/Nav";
     import Carouse from "@/components/Carouse";
     import Medias from "@/components/Media";
-    import { medias as MediaRequest } from "@/api";
+    import { media as MediaRequest, recentlyUpdate as recentlyUpdateRequest } from "@/api";
 
     export default {
         name: "Index",
@@ -132,14 +131,25 @@
             Carouse,
             Medias,
         },
+        data: function() {
+            return {
+                mediaData:{},
+                recentlyUpdate:[],
+            };
+        },
         created(){
             this.loadMedia()
+            this.loadRecentlyUpdate()
         },
         methods: {
             loadMedia (){
-
-                MediaRequest({
-                    a:'a'
+                MediaRequest().then((response) => {
+                    this.mediaData = response.data
+                })
+            },
+            loadRecentlyUpdate(){
+                recentlyUpdateRequest().then((response) => {
+                    this.recentlyUpdate = response.data
                 })
             }
         }
@@ -147,7 +157,30 @@
 </script>
 
 <style lang="scss" scoped>
-    .body{
+    a {
+        text-decoration: none;
+    }
+    /*正常的未被访问过的链接*/
+    a:link {
+        text-decoration: none;
+    }
+    /*已经访问过的链接*/
+    a:visited {
+        text-decoration: none;
+    }
+    /*鼠标划过(停留)的链接*/
+    a:hover {
+        text-decoration: none;
+    }
+    /* 正在点击的链接，鼠标在元素上按下还没有松开*/
+    a:active {
+        text-decoration: none;
+    }
+    /* 获得焦点的时候 鼠标松开时显示的颜色*/
+    a:focus {
+        text-decoration: none;
+    }
+        .body{
         padding: 20px 200px;
 
         .icon{
@@ -251,8 +284,12 @@
                         background: #EEEEEE;
                         opacity: 0.7;
                         border-radius: 10px;
-                        padding-left: 30px;
+                        padding-left: 25px;
                         padding-right: 10px;
+
+                        a{
+                            color: #222222;
+                        }
 
                         i{
                             float: right;
