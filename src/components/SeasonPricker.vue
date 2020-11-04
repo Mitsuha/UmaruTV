@@ -7,21 +7,44 @@
             <div>黄金之风</div>
         </div>
         <div class="episode">
-
+            <div class="tab">
+                <span>第一话-第八话</span>
+                <span>第九话-第十六话</span>
+            </div>
+            <el-row class="content">
+                <el-col :lg="6" :md="6" v-for="key in 10" :key="key">
+                    <div class="left">
+                        <img src="../assets/carouse/6.jpg" alt="">
+                    </div>
+                    <div class="right">
+                        
+                    </div>
+                </el-col>
+            </el-row>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "SeasonPricker"
+        name: "SeasonPricker",
+        data : function () {
+            return {
+                episode : [
+                    {
+
+                    }
+                ]
+            }
+        }
     }
 </script>
 
 <style lang="scss">
     .season-pricker{
-        margin-left: 10px;
         .season{
+            margin-left: 10px;
+
             div{
                 position: relative;
                 display: inline-block;
@@ -52,6 +75,32 @@
                 left: 99%;
                 top: -1px;
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAkCAYAAABfVsDFAAAAAXNSR0IArs4c6QAAAfVJREFUOBGF1b1uE0EQAOCZ/fFZcWIJGScRDR0SouAV6HgBJKSUVEGKhHgEeigIUsQTUEDJO9AhGpBoEcKxk5jYju3z3f5l5hQj29zdbuG73f12vLO7dwd/BiNzej7+3j8bPYVYmc7SMJrMw+nZaN47H7+s88iYgfMBZqmZaVT3ut1Wr2yQWDZKgaCVlMbbw2Xb5vUf5o6GFk0QcBRCUJuQ62uYo0tEObiYPIliBg0t25REaaJrkRlrVTQ9GFxOH3J9tfyHuTPRMnHGHq1Cvi/FSglO8GA4DO3VAaVYIC2jFCHzk2dRzIASbdFlLdHSyIylFIAAt3rD8WOuc6nE3Nls6G1w8ILvudRipWjygI96l+ndKCYJWguBxjyPYgaJEglAOKTzgrXTKKLReaFMsf93ej+KiwGIHoPfiWL6e34wmnud9rcoNtY7iv4REfMoznK7AFTHxXT4p6oY5yEg/rzTbX1lUxs5y+wVgTfLYJWYn3YPYPZutz9FcW78glb4HSVmazGtFhhrgwzy/RLytXQalJinTfu8u7vdj2JarrmQ+HYVlka2ltIC+EU79iWKc+uuaHFfb0Kur83Z03JRXmG/u/MhinPrM0A84XNQi3kTMuNcItVJGeS24m1pXYB0kaciiFedztbvKgw3n4kf9NY/qEQ3Hdf5GsAxnUDMHAAAAABJRU5ErkJggg==");
+            }
+        }
+
+        .episode{
+            margin-top: 10px;
+            .tab{
+                font-size: 16px;
+                font-weight: 400;
+                color: #999999;
+
+                span{
+                    margin-right: 20px;
+                }
+            }
+
+            .content{
+                .el-col{
+                    height: 104px;
+                    overflow: hidden;
+                    border-radius: 10px;
+                    .left{
+                        img{
+                            width: 100%;
+                        }
+                    }
+                }
             }
         }
     }

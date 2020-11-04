@@ -248,6 +248,7 @@
         margin-top: 20px;
 
         .season{
+            padding: 20px;
             background: white;
             z-index: -2;
         }
