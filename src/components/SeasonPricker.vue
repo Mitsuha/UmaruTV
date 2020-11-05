@@ -12,13 +12,13 @@
                 <span>第九话-第十六话</span>
             </div>
             <el-row class="content">
-                <el-col :lg="6" :md="6" v-for="key in 10" :key="key">
-                    <div class="left">
+                <el-col :lg="5" :md="5" v-for="key in 10" :key="key">
+                    <el-col :span="13" class="left">
                         <img src="../assets/carouse/6.jpg" alt="">
-                    </div>
-                    <div class="right">
-                        
-                    </div>
+                    </el-col>
+                    <el-col :span="11" class="right">
+                        <p>第一话</p>
+                    </el-col>
                 </el-col>
             </el-row>
         </div>
@@ -91,15 +91,24 @@
             }
 
             .content{
-                .el-col{
+                >.el-col{
                     height: 104px;
                     overflow: hidden;
                     border-radius: 10px;
+                    background: #EEEEEE;
+                    margin-right: 20px;
+                    margin-top: 20px;
+
+                    div{
+                        display: inline-block;
+                    }
+
                     .left{
                         img{
                             width: 100%;
                         }
                     }
+
                 }
             }
         }
