@@ -1,4 +1,4 @@
-`<template>
+<template>
     <div class="nav">
         <div class="nav-link">
             <p class="nav-logo"><i class="el-icon-sunny" style="font-size: 20px"></i> UmaruTV</p>
@@ -161,4 +161,4 @@
         }
 
     }
-</style>`
+</style>
